@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+    />
+    <title>{% block title %}
+    
+    {% endblock title %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'singleproduct.css' %}" />
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+   
+
+    {% block css %}
+
+     {% endblock css %}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  </head>
+  <body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">Clothes</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/"
+              >Home <span class="sr-only">(current)</span></a
+            >
+          </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="/users/orders">My Orders</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/profile">Profile</a>
+          </li>
+          {% endif %}
+          {% block category %}
+        
+          {% endblock category %}
+        </ul>
+        <form class="d-flex mr-2" action="/search">
+          <input class="form-control me-2" name='search' type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success ml-2" type="submit">Search</button>
+        </form>
+        {% if user.is_authenticated %}
+        <a href="/users/logout"
+          ><button class="btn btn-outline-success my-2 my-sm-0">
+            Logout
+          </button></a
+        >
+        <a href="/cart"
+        ><button class="btn btn-outline-success my-2 ml-2 my-sm-0">
+              Cart {{user.cart.count}}
+        </button></a
+      >
+        {% else %}
+        <a href="/users/login"
+          ><button class="btn btn-outline-success my-2 my-sm-0">
+            Login
+          </button></a
+        >
+        <a href="/users/signup"
+          ><button class="btn btn-outline-success my-2 ml-4 my-sm-0">
+            Signup
+          </button></a
+        >
+        {% endif %}
+      </div>
+    </nav>
+    {% block content %}
+     {% endblock content %}
+     
+     {% block cart %}
+       
+     {% endblock cart %}
+
+     {% block js %}
+   
+    {% endblock js %}
+  </body>
+</html>

@@ -1,0 +1,61 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <div class="main-body m-4">
+    <div class="col-md-8">
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Full Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{user.first_name}} {{user.last_name}}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{user.email}}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Gender</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{user.gender}}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">CNIC</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{user.cnic}}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Date Of Birth</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              {{user.date_of_birth}}
+            </div>
+          </div>
+            <a class="" href="/users/editprofile">
+           <button class="btn btn-primary w-100 mt-3">
+        Edit
+          </button>
+          </a>
+        </div>
+          
+      </div>
+      </div>
+      
+
+    </div>
+  </div>
+</div>
+
+      {% endblock content %}
+      {% block title %}
+        profile
+      {% endblock title %}

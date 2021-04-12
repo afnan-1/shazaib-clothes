@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="signup-form">
+    <form action="/users/editprofile/" method="post" validate>
+		<h2>Edit  Profile</h2>
+        {% csrf_token %}
+        <div class="form-group">
+            <label class='text-dark'>Email:</label>
+        	<input type="email" class="form-control" name="email" placeholder="{{user.email}}" disabled>
+        </div>
+           <div class="form-group">
+            <label class='text-dark'>First Name:</label>
+               
+        	<input type="text" class="form-control" name="first_name" value="{{user.first_name}}" >
+        </div>
+           <div class="form-group">
+            <label class='text-dark'>Last Name:</label>
+
+        	<input type="text" class="form-control" name="last_name" value="{{user.last_name}}">
+        </div>
+        <div class="form-group">
+            <label class='text-dark'>Age:</label>
+
+        	<input type="text" class="form-control" name="age" value="{{user.age}}">
+        </div>
+        <div class="form-group">
+            <label class='text-dark'>CNIC:</label>
+
+        	<input type="text" class="form-control" name="cnic" value="{{user.cnic}}">
+        </div>
+        <div class="form-group">
+            <label class='text-dark'>Gender:</label>
+            Male
+        	<input type="radio" name="gender" value="Male" {% if male %}checked{% endif %}>
+            Female
+        	<input type="radio"  name="gender" value="Female" {% if female %} checked {% endif %} >
+
+        </div> 
+        <div class="form-group">
+            <label class='text-dark'>Date of birth:</label>
+
+        	<input type="text" class="form-control" name="dob" value="{{user.date_of_birth}}">
+        </div>
+		<div class="form-group">
+           
+
+            <button type="submit" id='btn' class="btn btn-success btn-lg btn-block">Save</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
+{% block title %}
+        edit profile
+      {% endblock title %}

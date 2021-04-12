@@ -1,0 +1,325 @@
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="card">
+    <div class="container-fliud">
+      <div class="wrapper row">
+        <div class="preview col-md-6">
+          <div class="preview-pic tab-content">
+            <div class="tab-pane active" id="pic-1">
+              <img src="{{product.image.url}}" />
+            </div>
+            <div class="tab-pane" id="pic-2">
+              <img src="{{product.image1.url}}" />
+            </div>
+            <div class="tab-pane" id="pic-3">
+              <img src="{{product.image2.url}}" />
+            </div>
+          </div>
+          <ul class="preview-thumbnail nav nav-tabs">
+            <li class="active">
+              <a data-target="#pic-1" data-toggle="tab"
+                ><img src="{{product.image.url}}"
+              /></a>
+            </li>
+            <li>
+              <a data-target="#pic-2" data-toggle="tab"
+                ><img src="{{product.image1.url}}"
+              /></a>
+            </li>
+            <li>
+              <a data-target="#pic-3" data-toggle="tab"
+                ><img src="{{product.image2.url}}"
+              /></a>
+            </li>
+         
+          </ul>
+        </div>
+        <div class="details col-md-6">
+          <h3 class="product-title">{{product.title}}</h3>
+          <p class="product-description">
+            {{product.description}}
+          </p>
+          <h4 class="price">current price: <span>Rs {{product.price}}</span></h4>
+          <!-- <h5 class="sizes">
+            sizes:
+            <span class="size" data-toggle="tooltip" title="small">s</span>
+            <span class="size" data-toggle="tooltip" title="medium">m</span>
+            <span class="size" data-toggle="tooltip" title="large">l</span>
+            <span class="size" data-toggle="tooltip" title="xtra large"
+              >xl</span
+            >
+          </h5> -->
+          <a class="action" href="/addtocart/{{product.id}}">
+            <button class="add-to-cart btn btn-default col-sm-12" type="button">
+              add to cart
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <br> <br>
+<h3 class="text-center">Related Products</h3>
+<div class="container-fluid">
+
+
+<div class="row justify-content-center">
+{% for i in products %}
+    <div class="card1 mt-4 mr-3 rounded bg-white" style="width: 14rem">
+      <a href="{{i.get_absolute_url}}">
+        <img src="{{i.image.url}}" width="100" style="object-fit: contain;" class="card-img-top" alt="..."
+      /></a>
+      <div class="card-body">
+        <a href="{{i.get_absolute_url}}" class="card-title text-dark"
+          >{{i.title}}</a
+        >
+        <p><strong> Rs </strong>{{product.price}}</p>
+      </div>
+    </div>
+{% endfor %}
+</div>
+</div>
+
+
+
+<script>
+  function changeImage(e) {
+    let img = document.getElementById("img");
+    img.src = e.src;
+  }
+</script>
+
+{% endblock content %} {% block title %} {{product.title}} {% endblock title %}
+{% block category %} {% for i in category %}
+<li class="nav-item">
+  <a href="/category/{{i.name}}" class="nav-link"> {{i.name}}</a>
+</li>
+{% endfor %} {% endblock category %} {% block css %}
+<style>
+  /*****************globals*************/
+  /* body {
+    font-family: "open sans";
+    overflow-x: hidden;
+  } */
+
+  img {
+    max-width: 100%;
+  }
+
+  .preview {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  @media screen and (max-width: 996px) {
+    .preview {
+      margin-bottom: 20px;
+    }
+  }
+
+  .preview-pic {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  .preview-thumbnail.nav-tabs {
+    border: none;
+    margin-top: 15px;
+  }
+  .preview-thumbnail.nav-tabs li {
+    width: 18%;
+    margin-right: 2.5%;
+  }
+  .preview-thumbnail.nav-tabs li img {
+    max-width: 100%;
+    display: block;
+  }
+  .preview-thumbnail.nav-tabs li a {
+    padding: 0;
+    margin: 0;
+  }
+  .preview-thumbnail.nav-tabs li:last-of-type {
+    margin-right: 0;
+  }
+
+  .tab-content {
+    overflow: hidden;
+  }
+  .tab-content img {
+    width: 100%;
+    -webkit-animation-name: opacity;
+    animation-name: opacity;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+  }
+
+  .card {
+    margin-top: 50px;
+    background: #eee;
+    padding: 3em;
+    line-height: 1.5em;
+  }
+
+  @media screen and (min-width: 997px) {
+    .wrapper {
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+    }
+  }
+
+  .details {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+
+  .colors {
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+  }
+
+  .product-title,
+  .price,
+  .sizes,
+  .colors {
+    text-transform: UPPERCASE;
+    font-weight: bold;
+  }
+
+  .checked,
+  .price span {
+    color: #ff9f1a;
+  }
+
+  .product-title,
+  .rating,
+  .product-description,
+  .price,
+  .vote,
+  .sizes {
+    margin-bottom: 15px;
+  }
+
+  .product-title {
+    margin-top: 0;
+  }
+
+  .size {
+    margin-right: 10px;
+  }
+  .size:first-of-type {
+    margin-left: 40px;
+  }
+
+  .color {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    height: 2em;
+    width: 2em;
+    border-radius: 2px;
+  }
+  .color:first-of-type {
+    margin-left: 20px;
+  }
+
+  .add-to-cart,
+  .like {
+    background: #ff9f1a;
+    padding: 1.2em 1.5em;
+    border: none;
+    text-transform: UPPERCASE;
+    font-weight: bold;
+    color: #fff;
+    -webkit-transition: background 0.3s ease;
+    transition: background 0.3s ease;
+  }
+  .add-to-cart:hover,
+  .like:hover {
+    background: #b36800;
+    color: #fff;
+  }
+
+  .not-available {
+    text-align: center;
+    line-height: 2em;
+  }
+  .not-available:before {
+    font-family: fontawesome;
+    content: "\f00d";
+    color: #fff;
+  }
+
+  .orange {
+    background: #ff9f1a;
+  }
+
+  .green {
+    background: #85ad00;
+  }
+
+  .blue {
+    background: #0076ad;
+  }
+
+  .tooltip-inner {
+    padding: 1.3em;
+  }
+
+  @-webkit-keyframes opacity {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale(3);
+      transform: scale(3);
+    }
+    100% {
+      opacity: 1;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+
+  @keyframes opacity {
+    0% {
+      opacity: 0;
+      -webkit-transform: scale(3);
+      transform: scale(3);
+    }
+    100% {
+      opacity: 1;
+      -webkit-transform: scale(1);
+      transform: scale(1);
+    }
+  }
+  .card1{
+    border-radius: 19px !important;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  cursor: pointer;
+}
+
+.card1:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+</style>
+{% endblock css %}

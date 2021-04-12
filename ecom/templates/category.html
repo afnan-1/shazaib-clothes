@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container-fluid">
+<div class="row justify-content-center">
+    {% for product in products %}
+    <div class="card m-2" style="width: 15rem">
+       <a href="{{product.get_absolute_url}}"><img src="{{product.image.url}}" class="card-img-top" alt="..." /></a> 
+        <div class="card-body">
+          <a href="{{product.get_absolute_url}}" class="card-title"
+            >{{product.title}}</a
+          >
+          <p class="card-text">{{product.description}}.</p>
+        <p><strong> Rs </strong>{{product.price}}</p>
+
+        </div>
+      </div>
+    {% endfor %}
+</div>
+</div>
+
+{% endblock content %}
+{% block category %}
+{% for i in category %}
+<li class="nav-item">
+<a href="/category/{{i.name}}" class="nav-link"> {{i.name}}</a>
+</li>
+{% endfor %}
+{% endblock category %}
+    {% block title %}
+{{name}}
+    {% endblock title %}
+{% block css %}
+  <style>
+     .card{
+    border-radius: 19px !important;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  cursor: pointer;
+}
+
+.card:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+  </style>
+{% endblock css %}

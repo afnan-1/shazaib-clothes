@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    {% if search_result %} {% for product in search_result %}
+
+    <div class="card mt-4 mr-3 rounded product" style="width: 15rem">
+      <img src="{{product.image.url}}" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <a href="{{product.get_absolute_url}}" class="card-title"
+          >{{product.title}}</a
+        >
+        <p class="card-text">{{product.description}}.</p>
+        <a href="/addtocart/{{product.id}}" class="btn btn-primary"
+          >Add to Cart</a
+        >
+      </div>
+    </div>
+    
+    {% endfor %} {% elif search_result.count < 1 %}
+
+    <div class="alert alert-warning w-100 text-center" role="alert">
+      No Result Found
+      </div> {% endif %}  
+    {% for product in products %}
+    <div class="card mt-4 mr-3 rounded" style="width: 15rem">
+      <a href="{{product.get_absolute_url}}">
+        <img src="{{product.image.url}}" class="card-img-top" alt="..."
+      /></a>
+      <div class="card-body">
+        <a href="{{product.get_absolute_url}}" class="card-title text-dark"
+          >{{product.title}}</a
+        >
+        <p><strong> Rs </strong>{{product.price}}</p>
+      </div>
+    </div>
+    {% endfor %}
+    
+   
+  </div>
+</div>
+{% endblock content %} {% block title %} Clothes|home {% endblock title %}
+
+{% block category %}
+{% for i in category %}
+<li class="nav-item">
+<a href="/category/{{i.name}}" class="nav-link"> {{i.name}}</a>
+</li>
+{% endfor %}
+{% endblock category %}
+{% block css %}
+  <style>
+     .card{
+    border-radius: 19px !important;
+    background: #fff;
+    box-shadow: 0 6px 10px rgba(0,0,0,.08), 0 0 6px rgba(0,0,0,.05);
+      transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+  cursor: pointer;
+}
+
+.card:hover{
+     transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+  </style>
+{% endblock css %}

@@ -1,0 +1,9 @@
+{% block content %}
+{% for i in order %}
+<p>Order {{forloop.counter}}</p>
+  {% for j in i.products.all %}
+   Title {{j.title}} <br>
+  {% endfor %}
+{% endfor %}
+ 
+{% endblock content %}

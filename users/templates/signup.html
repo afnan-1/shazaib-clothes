@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if messages %}
+        {% for message in messages %}
+        <div class=" m-3 alert alert-danger" role="alert">
+            Email already exists.
+          </div>
+        {% endfor %}
+    {% endif %}
+  {% csrf_token %}
+<div class="signup-form">
+    <form action="/users/signup/" method="post" validate>
+		<h2>Register</h2>
+        {% csrf_token %}
+		<p class="hint-text">Create your account. It's free and only takes a minute.</p>
+        <div class="form-group">
+			<div class="row">
+				<div class="col"><input type="text" class="form-control" name="first_name" placeholder="First Name" required="required"></div>
+				<div class="col"><input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
+			</div>        	
+        </div>
+        <div class="form-group">
+        	<input type="email" class="form-control" name="email" placeholder="Email" required="required">
+        </div>
+         <div class="form-group">
+        	<input type="text" class="form-control" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+        	<input type="text" class="form-control" name="age" placeholder="Age">
+        </div>
+        <div class="form-group">
+        	<input type="text" class="form-control" name="dob" placeholder="Date-of-birth" required="required">
+        </div>
+        <div class="">
+        male
+        	<input type="radio" name="gender" value='Male' placeholder="Gender" required="required">
+        	female<input type="radio" name="gender" value='Female' placeholder="Gender" required="required">
+        
+        </div>
+        <div class="form-group">
+        	<input type="text" class="form-control" name="cnic" placeholder="CNIC" required="required">
+        </div>
+		<div class="form-group">
+            <input id='password' type="password" class="form-control" name="password" placeholder="Password" required="required">
+        </div>
+		<div class="form-group">
+            <input id='confirm_password' oninput="signup()" type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required="required">
+            <small id='validate_password' class='ml-2 text-danger'>Your password is not same</small>
+        </div>        
+        
+		<div class="form-group">
+            <button type="submit" id='btn' class="btn btn-success btn-lg btn-block">Register Now</button>
+        </div>
+    </form>
+	<div class="text-center">Already have an account? <a class="text-dark d-block" href="/users/login ">Sign in</a></div>
+</div>
+<script>
+var validate_password = document.getElementById('validate_password')
+validate_password.style.display = 'none';
+function signup(){
+    let password = document.getElementById('password').value
+    let confirm_password = document.getElementById('confirm_password').value
+    let btn=document.getElementById('btn')
+    if(password!=confirm_password){
+    btn.disabled = true;
+    validate_password.style.display='block'
+}
+else{
+    btn.disabled = false;
+    validate_password.style.display='none'
+}
+}
+
+</script>
+{% endblock content %}
+{% block title %}
+        signup
+      {% endblock title %}
