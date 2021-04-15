@@ -1,9 +1,51 @@
-{% block content %}
-{% for i in order %}
-<p>Order {{forloop.counter}}</p>
-  {% for j in i.products.all %}
-   Title {{j.title}} <br>
-  {% endfor %}
-{% endfor %}
- 
-{% endblock content %}
+{% extends "base.html" %} {% block content %}
+<div class="container">
+  <div class="bg-white my-4 rounded border">
+    <div class="col-md-12 col-sm-12 col-xs-12 col-md-pull-6 col-sm-pull-6">
+      <!--SHIPPING METHOD-->
+      <div class="panel panel-default">
+        <div class="panel-heading text-center py-2"><h4>Recent Orders</h4></div>
+        <div class="panel-body">
+          <table class="table borderless">
+            <thead>
+              <tr>
+                <td><strong>Total Orders: {{order.count}}</strong></td>
+                <td></td>
+                <td></td>
+               
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in order %}
+              <tr>
+                <td>Order # {{forloop.counter}}</td>
+                <td></td>
+                <td></td>
+                
+              </tr>
+              {% for j in i.products.all %}
+              <tr>
+                <td class="col-md-3">
+                  <div class="media">
+                    <a class="thumbnail pull-left" href="#">
+                      <img
+                        class="media-object"
+                        src="{{j.image.url}}"
+                        style="width: 72px; height: 72px"
+                      />
+                    </a>
+                    <div class="media-body ml-2">
+                     <a href="{{j.get_absolute_url}}"> <h5 class="media-heading text-dark">{{j.title}}</h5></a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %} {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock content %}
+</div>

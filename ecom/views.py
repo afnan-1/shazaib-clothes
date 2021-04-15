@@ -1,5 +1,5 @@
 from django.shortcuts import render,get_object_or_404,redirect,reverse,redirect
-from .models import Product,Order,Category
+from .models import Product,Order,Category,Quantity
 from users.models import CustomUser
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
@@ -28,6 +28,8 @@ def addtocart(request,id):
     if request.user.is_authenticated:
         user = get_object_or_404(CustomUser,id=request.user.id)
         product = get_object_or_404(Product,id=id)
+        quantity = Quantity(quantity=request.GET['quantity'],product=product,user=user)
+        quantity.save()
         user.cart.add(product)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -40,15 +42,25 @@ def searchProduct(request):
 
 def cart(request):
     category = Category.objects.all()
-    total = 0
+    total = []
+    total_price = []
+    quanty = []
     if request.user.is_authenticated:
         user = get_object_or_404(CustomUser,id=request.user.id)
+        quantity = Quantity.objects.filter(user=user)
         if (user.cart.count())<1:
             messages.info(request, 'You cart is empty')
         else: 
             for i in user.cart.all():
-                total += i.price
-        return render(request,'cart.html',{'user':user,'category':category,'total':total})
+                total.append(i.price)
+            for i in quantity.all():
+                quanty.append(i.quantity)
+            total = [int(i) for i in total]
+            quanty = [int(i) for i in quanty]
+            for num1, num2 in zip(total, quanty):
+	            total_price.append(num1*num2)
+            
+        return render(request,'cart.html',{'user':user,'category':category,'total':sum(total_price),'quantity':quanty})
 
 
 
@@ -60,14 +72,19 @@ def deletecart(request,pk):
     if request.user.is_authenticated:
         user = get_object_or_404(CustomUser,id=request.user.id)
         product = get_object_or_404(Product,id=pk)
+        quantity = Quantity.objects.filter(user=user,product=product).delete()
         user.cart.remove(product)
         return redirect('/cart/')
 
 def checkout(request):
+    quanty = []
     category = Category.objects.all()
+    quantity = Quantity.objects.filter(user__id=request.user.id)
     if request.user.is_authenticated:
         user = get_object_or_404(CustomUser,id=request.user.id)
-        return render(request,'checkout.html',{'user':user,'category':category})
+        for i in quantity.all():
+                quanty.append(i.quantity)
+        return render(request,'checkout.html',{'user':user,'category':category,'quantity':quanty})
 
 def checkoutbilling(request):
     if request.user.is_authenticated:
@@ -77,9 +94,16 @@ def checkoutbilling(request):
         email = request.GET.get('email')
         address = request.GET.get('address')
         city = request.GET.get('city')
+        quantity = Quantity.objects.filter(user=user)
         order = Order(first_name=first_name, last_name=last_name, email=email, address=address,city=city,user=user)
         order.save()
         for i in user.cart.all():
             order.products.add(i)
+        total_quantity=""
+        for i in quantity.all():
+            total_quantity +=  f'product {i.product.title} quantity {i.quantity} \n' 
+        order.quantity = total_quantity
+        order.save()
         user.cart.clear()
+        Quantity.objects.all().delete()
         return redirect('/')

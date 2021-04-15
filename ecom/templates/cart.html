@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load tags %}
 {% block cart %}
 <div>
     {% if messages %}
@@ -23,7 +24,7 @@
                                 <th scope="col">Product</th>
                                 <th scope="col">Available</th>
                                 <th scope="col" class="text-right">Price</th>
-                                <th> </th>
+                                <th scope="col" class="text-right">quantity</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,7 +33,13 @@
                                 <td><img src="{{i.image.url}}" width="100" /> </td>
                                 <td>{{i.title}}</td>
                                 <td>In stock</td>
-                                <td class="text-right"> <strong> {{i.price}} Rs</strong></td>
+                                
+                                {% for j in quantity  %}
+                                {% if forloop.counter == forloop.parentloop.counter %}
+                                <td class="text-right"> <strong> {{i.price|multiply:j}} Rs</strong></td>
+                                <td class="text-right"> <strong> {{j}}</strong></td>
+                                {% endif %}
+                                {% endfor %}
                                 <td class="text-right"> <a href="/deletecart/{{i.id}}/"> <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button></a> </td>
                             </tr>
                             {% endfor %}
@@ -41,6 +48,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+
                                 <td><strong>Total</strong></td>
                                 <td class="text-right"><strong>{{total}} Rs</strong></td>
                             </tr>

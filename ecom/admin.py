@@ -11,6 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 class OrderAdmin(admin.ModelAdmin):
     filter_horizontal=('products',)
+    fields = ('products','user','quantity','email','address','city','first_name','last_name')
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Category)
 admin.site.register(Order,OrderAdmin)

@@ -19,7 +19,11 @@
               <h6 class="my-0">{{i.title}}</h6>
               <small class="text-muted">{{i.description}}</small>
             </div>
-            <span class="text-muted">{{i.price}}</span>
+            {% for j in quantity  %}
+            {% if forloop.counter == forloop.parentloop.counter %}
+            <span class="text-muted">{{j}}</span>
+            {% endif %}
+            {% endfor %}
           </li>
           {% endfor %}
         </ul>
