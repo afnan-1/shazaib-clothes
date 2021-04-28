@@ -46,10 +46,15 @@
           <button class="btn btn-secondary col-2 mr-2 " onclick="removequantity()">-</button><span class="col-2 text-center" id='quantity'> 1 </span>
           <button class="btn btn-secondary col-2 ml-2 " onclick="addquantity()">+</button>
         </div>
+        {% if request.user.is_authenticated %}
         <form action="/addtocart/{{product.id}}" method="GET">
-            <input class="d-none" id="showquantity" value="1" name="quantity" type="text">
-            <input type="submit" class="add-to-cart btn btn-default col-sm-12" value="add to cart"/>
-          </form>
+          <input class="d-none" id="showquantity" value="1" name="quantity" type="text">
+          <input type="submit" class="add-to-cart btn btn-default col-sm-12" value="add to cart"/>
+        </form>
+        {% else %}
+        <h3>Please Login First to buy this product</h3>
+        {% endif %}
+        
         </div>
       </div>
     </div>

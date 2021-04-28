@@ -50,16 +50,22 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item {% block active_home %}
+            
+          {% endblock active_home %}">
             <a class="nav-link" href="/"
               >Home <span class="sr-only">(current)</span></a
             >
           </li>
           {% if user.is_authenticated %}
-          <li class="nav-item">
+          <li class="nav-item {% block active_orders %}
+            
+          {% endblock active_orders %}">
             <a class="nav-link" href="/users/orders">My Orders</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {% block active_profile %}
+            
+          {% endblock active_profile %}">
             <a class="nav-link" href="/users/profile">Profile</a>
           </li>
           {% endif %}

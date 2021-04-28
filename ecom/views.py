@@ -83,10 +83,13 @@ def checkout(request):
     if request.user.is_authenticated:
         user = get_object_or_404(CustomUser,id=request.user.id)
         for i in quantity.all():
-                quanty.append(i.quantity)
-        return render(request,'checkout.html',{'user':user,'category':category,'quantity':quanty})
+            quanty.append(i.quantity)
+        return render(request,'checkout.html',{'user':user,'category':category})
 
 def checkoutbilling(request):
+    quanty = []
+    total_price = []
+    total = []
     if request.user.is_authenticated:
         user = get_object_or_404(CustomUser,id=request.user.id)
         first_name = request.GET.get('first_name')
@@ -98,10 +101,17 @@ def checkoutbilling(request):
         order = Order(first_name=first_name, last_name=last_name, email=email, address=address,city=city,user=user)
         order.save()
         for i in user.cart.all():
+            total.append(i.price)
             order.products.add(i)
         total_quantity=""
         for i in quantity.all():
+            quanty.append(i.quantity)
             total_quantity +=  f'product {i.product.title} quantity {i.quantity} \n' 
+        total = [int(i) for i in total]
+        quanty = [int(i) for i in quanty]
+        for num1, num2 in zip(total, quanty):
+	        total_price.append(num1*num2) 
+        order.total_price = sum(total_price)
         order.quantity = total_quantity
         order.save()
         user.cart.clear()

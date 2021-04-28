@@ -33,6 +33,7 @@ class Order(models.Model):
     products = models.ManyToManyField(Product,blank=True,related_name='products')
     user = models.ForeignKey('users.CustomUser',on_delete=models.CASCADE)
     quan = models.ManyToManyField(Quantity,related_name='quan')
+    total_price = models.IntegerField(blank=True,null=True)
     quantity = models.TextField(max_length=500,null=True,blank=True)
     email = models.CharField(max_length=100,blank=True,null=True)
     address = models.CharField(max_length=400,blank=True,null=True)
