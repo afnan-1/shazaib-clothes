@@ -74,17 +74,26 @@ WSGI_APPLICATION = 'core.wsgi.application'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     "static",
-    '/var/www/static/',
+    # '/var/www/static/',
 ]
+# STATIC_ROOT = os.path.join(BASE_DIR,'staticfiles')
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
+    'default':{
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME':"demo_1",
+        'USER':"afnan",
+        'PASSWORD':'asdfgh123',
+        'HOST':'database-2.cvlxrmldznio.us-east-2.rds.amazonaws.com',
+        'PORT':5432
     }
 }
 
