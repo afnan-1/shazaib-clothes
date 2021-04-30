@@ -72,11 +72,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    "static",
-    '/var/www/static/',
-]
-# STATIC_ROOT = os.path.join(BASE_DIR,'static/')
+# STATICFILES_DIRS = [
+    # "static",
+    # '/var/www/static/',
+# ]
+STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
 MEDIA_URL = '/media/'
 # Database
